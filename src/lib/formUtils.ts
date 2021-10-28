@@ -1,24 +1,40 @@
+import { validateInput } from "./validateLogin";
+
 export const UPDATE_FORM = "UPDATE_FORM";
 /** * Triggered every time the value of the form changes */
 
+// export interface fieldDef {
+//   name:     string;
+//   value:    string | boolean;
+//   touched:  boolean;
+//   hasError: boolean;
+//   error:    string;
+// }
+
+// const initialState = {
+//   name: { value: "", touched: false, hasError: true, error: "" },
+//   //email: { value: "", touched: false, hasError: true, error: "" },
+//   password: { value: "", touched: false, hasError: true, error: "" },
+//   //mobile: { value: "", touched: false, hasError: true, error: "" },
+//   terms: { value: false, touched: false, hasError: true, error: "" },
+//   isFormValid: false,
+// };
+
+
 export interface stateDef {
-  name: string;
-  value: string | boolean;
-  touched: boolean;
+  name:     string;
+  value:    string | boolean;
+  touched:  boolean;
   hasError: boolean;
-  error: string;
+  error:    string;
   isFormValid: boolean;
 }
 
-export const onInputChange = (
-  name: string,
-  value: string,
-  dispatch: React.Dispatch<any>,
-  formState: stateDef[]
-) => {
+export const onInputChange = (name:string, value:string, dispatch:React.Dispatch<any>, formState:stateDef[]) => {
   const { hasError, error } = validateInput(name, value);
   let isFormValid = true;
   for (const key in formState) {
+    console.log('onInputChange:' + key);
     const item = formState[key];
     if (key === name && hasError) {
       isFormValid = false;
@@ -28,21 +44,15 @@ export const onInputChange = (
       break;
     }
   }
-  dispatch({
-    type: UPDATE_FORM,
-    data: { name, value, hasError, error, touched: false, isFormValid },
-  });
+  dispatch({type: UPDATE_FORM, data: { name, value, hasError, error, touched: false, isFormValid }});
 };
 
-export const onFocusOut = (
-  name: string,
-  value: string | boolean,
-  dispatch: React.Dispatch<any>,
-  formState: stateDef[]
-) => {
+
+export const onFocusOut = (name: string,value: string | boolean,dispatch: React.Dispatch<any>,formState: stateDef[]) => {
   const { hasError, error } = validateInput(name, value);
   let isFormValid = true;
   for (const key in formState) {
+    console.log('onFocusOut:' + key);
     const item = formState[key];
     if (key === name && hasError) {
       isFormValid = false;
@@ -58,87 +68,13 @@ export const onFocusOut = (
   });
 };
 
-export const validateInput = (name: string, value: string|boolean) => {
-  let hasError = false,error = "";
-
-  let tmpValue: string = '';
-  if(typeof value === 'boolean') {
-    tmpValue = value? "true":"false";
-  }
-  else {
-    tmpValue = value;
-  }
-
-  switch (name) {
-
-    case "name":
-      if (tmpValue.trim() === "") {
-        hasError = true;
-        error = "Name cannot be empty";
-      } else if (!/^[a-zA-Z ]+$/.test(tmpValue)) {
-        hasError = true;
-        error = "Invalid Name. Avoid Special characters";
-      } else {
-        hasError = false;
-        error = "";
-      }
-      break;
-
-    case "email":
-      if (tmpValue.trim() === "") {
-        hasError = true;
-        error = "Email cannot be empty";
-      } else if (
-        !/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(
-          tmpValue
-        )
-      ) {
-        hasError = true;
-        error = "Invalid Email";
-      } else {
-        hasError = false;
-        error = "";
-      }
-      break;
-
-    case "password":
-      if (tmpValue.trim() === "") {
-        hasError = true;
-        error = "Password cannot be empty";
-      } else if (tmpValue.trim().length < 8) {
-        hasError = true;
-        error = "Password must have at least 8 characters";
-      } else {
-        hasError = false;
-        error = "";
-      }
-      break;
-
-    case "mobile":
-      if (tmpValue.trim() === "") {
-        hasError = true;
-        error = "Mobile cannot be empty";
-      } else if (!/^[0-9]{10}$/.test(tmpValue)) {
-        hasError = true;
-        error = "Invalid Mobile Number. Use 10 digits only";
-      } else {
-        hasError = false;
-        error = "";
-      }
-      break;
-
-    case "terms":
-      if (!value) {
-        hasError = true;
-        error = "You must accept terms and conditions";
-      } else {
-        hasError = false;
-        error = "";
-      }
-      break;
-
-    default:
-      break;
-  }
-  return { hasError, error };
-};
+// export function getFirstError(formState: stateDef[]) : string {
+//   for (const key in formState) {
+//     console.log('getFirstError:' + key);
+//     const item = formState[key];
+//     if (item.hasError) {
+//       return item.error;
+//     }  
+//   }
+//   return '';
+// }
