@@ -1,4 +1,4 @@
-export const validateInput = (name: string, value: string|boolean) => {
+export const validateInput = (fldName: string, value: string|boolean) => {
   let hasError = false,error = "";
 
   let tmpValue: string = '';
@@ -9,7 +9,7 @@ export const validateInput = (name: string, value: string|boolean) => {
     tmpValue = value;
   }
 
-  switch (name) {
+  switch (fldName) {
 
     case "name":
       if (tmpValue.trim() === "") {
@@ -17,12 +17,25 @@ export const validateInput = (name: string, value: string|boolean) => {
         error = "Name cannot be empty";
       } else if (!/^[a-zA-Z ]+$/.test(tmpValue)) {
         hasError = true;
-        error = "Invalid Name. Avoid Special characters";
+        error = "Invalid Name, avoid Special characters";
       } else {
         hasError = false;
         error = "";
       }
       break;
+
+      case "userId":
+        if (tmpValue.trim() === "") {
+          hasError = true;
+          error = "User id cannot be empty";
+        } else if (!/^[a-zA-Z ]+$/.test(tmpValue)) {
+          hasError = true;
+          error = "Invalid User id, avoid Special characters";
+        } else {
+          hasError = false;
+          error = "";
+        }
+        break;
 
     case "email":
       if (tmpValue.trim() === "") {

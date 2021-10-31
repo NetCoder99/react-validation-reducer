@@ -18,8 +18,8 @@ const initialState = {
   isFormValid: false,
 };
 
-const LoginForm = () => {
-  console.log("LoginForm.init:");
+const RequestsForm = () => {
+  console.log("RequestsForm.init:");
 
   const [formStatus, setFormStatus]  = useState({pending: false, errFlag: false, message: '' });
   const [formState,  formDispatch]   = useReducer(formsReducer, initialState);
@@ -71,4 +71,4 @@ const LoginForm = () => {
   );
 };
 
-export default LoginForm;
+export default RequestsForm;

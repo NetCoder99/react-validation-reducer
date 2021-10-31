@@ -1,4 +1,4 @@
-import { validateInput } from "./validateLogin";
+import { validateInput } from "./validateLoginFields";
 
 export const UPDATE_FORM = "UPDATE_FORM";
 /** * Triggered every time the value of the form changes */
