@@ -53,23 +53,19 @@ input.error {
 }
 
 .form_error {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  padding: 0.5rem 1.25rem;
-  border: 1px solid transparent;
-  border-radius: 0.25rem;
-  margin: 1rem 0;
-}
-
-.form_ok {
-  color: rgb(20, 110, 80);
-  padding: 0.5rem 1.25rem;
+  color: #b32937;
   border: 1px solid transparent;
   border-radius: 0.25rem;
   margin: 1rem 0;
   font-weight: bold;
+}
 
+.form_ok {
+  color: rgb(20, 110, 80);
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  margin: 1rem 0;
+  font-weight: bold;
 }
 
 .break {

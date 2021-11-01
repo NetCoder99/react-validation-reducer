@@ -1,6 +1,6 @@
 import { createServer, Model } from "miragejs";
 
-const FIREBASE_DOMAIN = 'https://127.0.0.1';
+const LOCAL_HOST = 'http://127.0.0.1:8181';
 
 export function makeServer({ environment = "dev" } = {}) {
   console.log("makeServer");
@@ -46,34 +46,35 @@ export function makeServer({ environment = "dev" } = {}) {
       });
     },
 
-    //'http://localhost:8081/Tasks/getTasks'
     routes() {
-      this.get("http://localhost:8081/Tasks/getProducts", (schema) => {
-        console.log("makeServer.getProducts");
-        return schema.products.all;
-      });
-
-      this.get(FIREBASE_DOMAIN + "/quotes", (schema) => {
+      this.get(LOCAL_HOST + "/quotes", (schema) => {
         console.log("makeServer.getAllQuotes");
         var data = schema.db.quotes;
         return data;
       }, { timing: 1000 } );
       
-      this.post(FIREBASE_DOMAIN + "/quotes", (schema, request) => {
+      this.post(LOCAL_HOST + "/quotes", (schema, request) => {
         console.log("makeServer.addQuotes");
         let attrs = JSON.parse(request.requestBody)
         var data = schema.quotes.create(attrs);
         return data;
       });
 
-      this.get(FIREBASE_DOMAIN + "/quotes/:quoteId", (schema, request) => {
+      this.get(LOCAL_HOST + "/quotes/:quoteId", (schema, request) => {
         const quoteId = request.params.quoteId;
         var data = schema.db.quotes.find(quoteId);
         return data;
       });
 
+      this.passthrough((request) => {
+         console.log('request:' + request)
+         if (request.url.includes('login')) {
+            return true;
+         }
+         return false;
+      });
+
     },
   });
-
   return server;
 }

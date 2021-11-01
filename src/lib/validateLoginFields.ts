@@ -28,10 +28,12 @@ export const validateInput = (fldName: string, value: string|boolean) => {
         if (tmpValue.trim() === "") {
           hasError = true;
           error = "User id cannot be empty";
-        } else if (!/^[a-zA-Z ]+$/.test(tmpValue)) {
-          hasError = true;
-          error = "Invalid User id, avoid Special characters";
-        } else {
+        } 
+        // else if (!/^[a-zA-Z ]+$/.test(tmpValue)) {
+        //   hasError = true;
+        //   error = "Invalid User id, avoid Special characters";
+        // } 
+        else {
           hasError = false;
           error = "";
         }
@@ -58,10 +60,12 @@ export const validateInput = (fldName: string, value: string|boolean) => {
       if (tmpValue.trim() === "") {
         hasError = true;
         error = "Password cannot be empty";
-      } else if (tmpValue.trim().length < 8) {
-        hasError = true;
-        error = "Password must have at least 8 characters";
-      } else {
+      } 
+      // else if (tmpValue.trim().length < 8) {
+      //   hasError = true;
+      //   error = "Password must have at least 8 characters";
+      // } 
+      else {
         hasError = false;
         error = "";
       }

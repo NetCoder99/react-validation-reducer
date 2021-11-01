@@ -1,4 +1,4 @@
-import { UPDATE_FORM, onInputChange } from '../lib/formUtils';
+import { UPDATE_FORM } from '../lib/formUtils';
 
 export interface Payload {
   type: string,

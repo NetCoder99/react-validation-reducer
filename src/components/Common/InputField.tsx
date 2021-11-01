@@ -1,7 +1,6 @@
 import { onFocusOut, onInputChange } from '../../lib/formUtils';
 import classes from '../Login/LoginForm.module.css';
 
-
 const InputField = (props: 
   { 
     id: string, 
@@ -9,9 +8,21 @@ const InputField = (props:
     formDispatch: React.Dispatch<any>, 
     formState: any
     type?: string
+    showMsg?: boolean
     }) => 
   {
-  console.log("InputField.init:");
+
+  let content = <div>&nbsp;</div>;
+  if (props.formState.touched && props.formState.hasError) {
+    content = <div className={classes.error}>{props.formState.error}</div>
+  };
+
+  let tmpClass = '';
+  if (props.formState.touched && props.formState.hasError) {
+    tmpClass = classes.error;
+  }
+
+
   return (
     <div className={classes.input_wrapper}>
     <label htmlFor={props.id}>{props.dispName}</label>
@@ -20,7 +31,7 @@ const InputField = (props:
       name={props.id}
       id={props.id}
       value={props.formState.value}
-      className={props.formState.touched && props.formState.hasError && classes.error}
+      className={tmpClass}
       onChange={(e) => {
         onInputChange(props.id, e.target.value, props.formDispatch, props.formState);
       }}
@@ -29,12 +40,7 @@ const InputField = (props:
       }}
     />
     <div className={classes.break} />
-    {!(props.formState.touched && props.formState.hasError) && (
-      <div className={classes.error}>&nbsp;</div>
-    )}            
-    {props.formState.touched && props.formState.hasError && (
-      <div className={classes.error}>{props.formState.error}</div>
-    )}
+    {props.showMsg && content} 
   </div>
   );
 };

@@ -10,7 +10,11 @@ const CheckBox = (props:
     type?: string
     }) => 
   {
-  console.log("InputField.init:");
+  console.log("CheckBox.init:");
+  let tmpClass = '';
+  if (props.formState.touched && props.formState.hasError) {
+    tmpClass = classes.error;
+  }
   return (
     <div className={classes.input_wrapper}>
     <label className={classes.toc}>
@@ -18,7 +22,7 @@ const CheckBox = (props:
         type="checkbox"
         name={props.id}
         checked={props.formState.value}
-        className={props.formState.touched && props.formState.hasError && classes.error}
+        className={tmpClass}
         onChange={e => {
           onFocusOut(props.id, e.target.checked, props.formDispatch, props.formState)
         }}                

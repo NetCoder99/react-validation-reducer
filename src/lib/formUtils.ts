@@ -34,7 +34,7 @@ export const onInputChange = (name:string, value:string, dispatch:React.Dispatch
   const { hasError, error } = validateInput(name, value);
   let isFormValid = true;
   for (const key in formState) {
-    console.log('onInputChange:' + key);
+    //console.log('onInputChange:' + key);
     const item = formState[key];
     if (key === name && hasError) {
       isFormValid = false;
@@ -52,7 +52,7 @@ export const onFocusOut = (name: string,value: string | boolean,dispatch: React.
   const { hasError, error } = validateInput(name, value);
   let isFormValid = true;
   for (const key in formState) {
-    console.log('onFocusOut:' + key);
+    //console.log('onFocusOut:' + key);
     const item = formState[key];
     if (key === name && hasError) {
       isFormValid = false;

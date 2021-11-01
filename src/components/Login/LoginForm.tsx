@@ -9,6 +9,8 @@ import FormStatus from "../Common/FormStatus";
 import InputField from "../Common/InputField";
 import CheckBox from "../Common/CheckBox";
 import { validateLoginForm } from "../../lib/validateLoginForm";
+import { setToken } from '../../lib/sessionStorage';
+import { AuthToken } from "../../models/AuthToken";
 
 const initialState = {
   userId:   { value: "", touched: false, hasError: true, error: "" },
@@ -25,23 +27,25 @@ const LoginForm = () => {
   const [formState,  formDispatch]   = useReducer(formsReducer, initialState);
   
   const formSubmitHandler = (event: any) => {
-    event.preventDefault() //prevents the form from submitting
+    event.preventDefault() 
     const {isFormValid, errMessage } = validateLoginForm(formState, formDispatch);
 
     if (!isFormValid) {
       setFormStatus({pending: false, errFlag: true, message: errMessage})
     } else {
       setFormStatus({pending: true, errFlag: false, message: "Processing request..."})
-      HttpService.getAllQuotes()
+      HttpService.login(formState.userId.value, formState.password.value)
       .then(response => {
-        const recCnt = response.data.length;
-        setFormStatus({pending: false, errFlag: false, message: "Processing complete: " + recCnt})
+        const token:AuthToken = {accessToken: response.data, refreshToken: ''};
+        setToken(token);
+        setFormStatus({pending: false, errFlag: false, message: "Login succeeded!"})
         console.table(response.data);
       })
       .catch(error => {
         setFormStatus({pending: false, errFlag: true, message: error.message})
         console.log(error);
       });
+
     }
   }
 
