@@ -1,5 +1,6 @@
 import { AuthToken } from "../models/AuthToken";
 
+const API_TOKEN     = "api_token";
 const ACCESS_TOKEN  = "access_token";
 const REFRESH_TOKEN = "refresh_token";
 
@@ -16,42 +17,11 @@ export function getRefreshToken() {
   return localStorage.getItem(REFRESH_TOKEN);
 }
 
-// const sessionStorage = function () {
-//   // var _service; 
-//   // function _getService(this: any)
-//   // {
-//   //    if(!_service) {
-//   //        _service = this;
-//   //        return _service
-//   //    }   
-//   //    return _service
-//   //  }
+export function setApiToken(tokenObj: string) {
+  sessionStorage.setItem(API_TOKEN, tokenObj);
+}
 
-//   function _setToken(tokenObj: AuthToken) {
-//     localStorage.setItem("access_token", tokenObj.accessToken);
-//     localStorage.setItem("access_token", tokenObj.refreshToken);
-//   }
+export function getApiToken() {
+  return sessionStorage.getItem(API_TOKEN);
+}
 
-//   function _getAccessToken() {
-//     return localStorage.getItem("access_token");
-//   }
-
-//   function _getRefreshToken() {
-//     return localStorage.getItem("access_token");
-//   }
-
-//   function _clearToken() {
-//     localStorage.removeItem("access_token");
-//     localStorage.removeItem("access_token");
-//   }
-
-//   return {
-//     //getService : _getService,
-//     setToken:        _setToken,
-//     getAccessToken:  _getAccessToken,
-//     getRefreshToken: _getRefreshToken,
-//     clearToken:      _clearToken,
-//   };
-// };
-
-// export default sessionStorage;

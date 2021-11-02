@@ -10,7 +10,6 @@ const CheckBox = (props:
     type?: string
     }) => 
   {
-  console.log("CheckBox.init:");
   let tmpClass = '';
   if (props.formState.touched && props.formState.hasError) {
     tmpClass = classes.error;

@@ -1,6 +1,6 @@
 import classes from "./LoginForm.module.css";
 
-import { useReducer, useState } from "react";
+import { useContext, useReducer, useState } from "react";
 import { formsReducer } from "../../store/formsReducer";
 import HttpService from '../../http/http-service';
 
@@ -11,6 +11,8 @@ import CheckBox from "../Common/CheckBox";
 import { validateLoginForm } from "../../lib/validateLoginForm";
 import { setToken } from '../../lib/sessionStorage';
 import { AuthToken } from "../../models/AuthToken";
+import { AuthContext } from "../../store/authContext";
+import { LOGIN } from "../../store/authReducer";
 
 const initialState = {
   userId:   { value: "", touched: false, hasError: true, error: "" },
@@ -25,6 +27,7 @@ const LoginForm = () => {
 
   const [formStatus, setFormStatus]  = useState({pending: false, errFlag: false, message: '' });
   const [formState,  formDispatch]   = useReducer(formsReducer, initialState);
+  const authCtx = useContext(AuthContext);
   
   const formSubmitHandler = (event: any) => {
     event.preventDefault() 
@@ -36,10 +39,15 @@ const LoginForm = () => {
       setFormStatus({pending: true, errFlag: false, message: "Processing request..."})
       HttpService.login(formState.userId.value, formState.password.value)
       .then(response => {
+        console.table('LoginForm.login', response.data);
         const token:AuthToken = {accessToken: response.data, refreshToken: ''};
         setToken(token);
+
+
+        authCtx.dispatch({type: LOGIN, payload: {isLoggedIn: true,apiToken  : response.data,userRoles : [],}})
+        //authDispatch({type: LOGIN, payload: {isLoggedIn: true,apiToken  : response.data,userRoles : [],}});
+        
         setFormStatus({pending: false, errFlag: false, message: "Login succeeded!"})
-        console.table(response.data);
       })
       .catch(error => {
         setFormStatus({pending: false, errFlag: true, message: error.message})

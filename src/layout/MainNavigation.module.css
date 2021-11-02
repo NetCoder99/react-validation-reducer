@@ -37,4 +37,5 @@
 .nav a:active,
 .nav a.active {
   color: #e6fcfc;
+  text-decoration: underline;
 }

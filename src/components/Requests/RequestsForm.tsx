@@ -1,4 +1,4 @@
-import classes from "./LoginForm.module.css";
+import classes from "./Requests.module.css";
 
 import { useReducer, useState } from "react";
 import { formsReducer } from "../../store/formsReducer";
@@ -9,8 +9,10 @@ import FormStatus from "../Common/FormStatus";
 import InputField from "../Common/InputField";
 import CheckBox from "../Common/CheckBox";
 import { validateLoginForm } from "../../lib/validateLoginForm";
+import SelectField from "../Common/SelectField";
 
 const initialState = {
+  marketCd: { value: "", touched: false, hasError: true, error: "" },
   userId:   { value: "", touched: false, hasError: true, error: "" },
   name:     { value: "", touched: false, hasError: true, error: "" },
   password: { value: "", touched: false, hasError: true, error: "" },
@@ -48,9 +50,10 @@ const RequestsForm = () => {
   return (
     <Card>
       <div className={classes.Login}>
-        <h1 className={classes.title}>Sign Up</h1>
+        <h1 className={classes.title}>Manage Requests</h1>
         <FormStatus pending={formStatus.pending} errFlag={formStatus.errFlag} message={formStatus.message} />
         <form onSubmit={e => formSubmitHandler(e)}>
+          <SelectField id={"marketCd"}   dispName="Market Codes:"  formDispatch={formDispatch} formState={formState.marketCd} />
           <InputField id={"userId"}   dispName="User Id:"  formDispatch={formDispatch} formState={formState.userId} />
           <InputField id={"name"}     dispName="Name:"     formDispatch={formDispatch} formState={formState.name}   />
           <InputField id={"password"} dispName="Password:" formDispatch={formDispatch} formState={formState.password} type="password"/>
