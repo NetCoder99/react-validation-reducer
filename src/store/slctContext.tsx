@@ -6,13 +6,11 @@ import { slctReducer } from "./slctReducer";
 export interface SlctDefinition {
   options: { key: string, value: string}[],
   crntItem: {key: string, value: string}
-  warningNo: string,
 }
 
 const slctInitState: SlctDefinition = {
   options: [{key: "", value: ""}, {key: "AZ", value: "8001"}, {key: "CA", value: "8002"}],
   crntItem: {key: "", value: ""},
-  warningNo: "",
 };
 
 export const SlctContext = React.createContext<{
