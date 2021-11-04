@@ -1,7 +1,6 @@
-import { useContext, useReducer } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { AuthContext } from "../store/authContext";
-import { authReducer, authInitialState } from "../store/authReducer";
 import classes from "./MainNavigation.module.css";
 
 const MainHeader = () => {

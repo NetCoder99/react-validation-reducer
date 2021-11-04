@@ -17,14 +17,14 @@
 
 .input_wrapper label {
   display: inline-block;
-  width: 7rem;
+  width: 9rem;
   text-align: left;
   font-size: 1.1rem;
 }
 
 .input_wrapper input {
   margin-top: 0.4rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .submit_btn {

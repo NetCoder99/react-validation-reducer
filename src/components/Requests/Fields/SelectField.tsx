@@ -1,7 +1,7 @@
-import { useContext } from "react";
-import { onFocusOut, onInputChange } from "../../lib/formUtils";
-import { SlctContext } from "../../store/slctContext";
-//import classes from "../Login/LoginForm.module.css";
+import React, { useContext } from "react";
+import { onFocusOut, onInputChange } from '../../../lib/formUtils';
+import { SlctContext } from "../../../store/slctContext";
+import classes from "../Requests.module.css";
 
 export interface selectProps {
   id:           string;
@@ -10,10 +10,6 @@ export interface selectProps {
   formState:    any;
   type?:        string;
   showMsg?:     boolean;
-
-  classes: {
-    readonly [key: string]: string;
-  }  
 }
 const SelectField = (props: selectProps) => {
   const slctCtx = useContext(SlctContext);
@@ -21,31 +17,37 @@ const SelectField = (props: selectProps) => {
 
   let tmpClass = '';
   if (props.formState.touched && props.formState.hasError) {
-    tmpClass = props.classes.error;
+    tmpClass = classes.error;
   }
 
   let content = <div>&nbsp;</div>;
   if (props.formState.touched && props.formState.hasError) {
-    content = <div className={props.classes.error}>{props.formState.error}</div>;
+    content = <div className={classes.error}>{props.formState.error}</div>;
   }
 
+  function slctChangeHandler(event: React.ChangeEvent<HTMLSelectElement>) {
+    onInputChange(props.id, event.target.value, props.formDispatch, props.formState);
+    const key = event.target.options[event.target.selectedIndex].text;
+    slctCtx.dispatch({ type: "SET_ITEM", payload: { item: {key: key, value: event.target.value} } })
+  };
+
   return (
-    <div className={props.classes.input_wrapper}>
+    <div className={classes.input_wrapper}>
       <label htmlFor={props.id}>{props.dispName}</label>
+      <div className={`${classes.break}`} />
+
       <select
         value={props.formState.value}
         className={tmpClass}
-        onChange={(e) => {
-          onInputChange(props.id,e.target.value,props.formDispatch,props.formState);
-        }}
+        onChange={slctChangeHandler}
         onBlur={(e) => {
           onFocusOut(props.id,e.target.value,props.formDispatch,props.formState);
         }}
       >
-        <option value="Select an option"></option>
+        <option value=""></option>
         {tmpOptions}
       </select>
-      <div className={props.classes.break} />
+      <div className={classes.break} />
       {props.showMsg && content}
     </div>
   );

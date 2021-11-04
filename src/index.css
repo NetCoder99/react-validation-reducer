@@ -11,3 +11,21 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.success {
+  color: brown;
+  font-weight: bold;
+}
+
+input.error {
+  background-color: rgb(226, 190, 190);
+}
+
+label.error {
+  color: brown;
+  font-weight: bold;
+}
+
+.width5rem {
+  width: 5rem;
+}

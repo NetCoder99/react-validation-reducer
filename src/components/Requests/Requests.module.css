@@ -12,19 +12,32 @@
   flex-wrap: wrap;
   flex-direction: row;
   margin-bottom: 0.5rem;
-
+  margin-right: 1rem;
 }
+
+.flexChild {
+  flex: 1;
+}  
+
+.flex-child:first-child {
+  margin-right: 20px;
+} 
 
 .input_wrapper label {
   display: inline-block;
   width: 7rem;
   text-align: left;
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 
 .input_wrapper input {
   margin-top: 0.4rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
+}
+
+.input_wrapper select {
+  margin-top: 0.4rem;
+  font-size: 1rem;
 }
 
 .submit_btn {
@@ -49,6 +62,10 @@ div.error {
 }
 
 input.error {
+  background-color: rgb(226, 190, 190);
+}
+
+select.error {
   background-color: rgb(226, 190, 190);
 }
 

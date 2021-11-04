@@ -1,8 +1,6 @@
 import classes from "./LoginForm.module.css";
 
-import { useContext, useEffect, useReducer, useState } from "react";
-import { formsReducer } from "../../store/formsReducer";
-import HttpService from '../../http/http-service';
+import { useContext, useEffect } from "react";
 
 import Card from "../UI/Card";
 import { AuthContext } from "../../store/authContext";
@@ -12,6 +10,7 @@ const LogoutForm = () => {
   const authCtx = useContext(AuthContext);
   useEffect(() => {
     authCtx.dispatch({type: LOGOUT})
+    // eslint-disable-next-line    
   }, [])  
 
   return (

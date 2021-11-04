@@ -36,6 +36,7 @@ export const authReducer = (state: any, action: AuthAction) => {
       return {...obj};
 
     case LOGOUT:
+      // eslint-disable-next-line    
       var obj:AuthPayload = {
         isLoggedIn: false,
         apiToken  : '',

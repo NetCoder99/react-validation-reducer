@@ -1,73 +1,103 @@
 import classes from "./Requests.module.css";
 
-import { useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { formsReducer } from "../../store/formsReducer";
-import HttpService from '../../http/http-service';
+import HttpService from "../../http/http-service";
 
 import Card from "../UI/Card";
 import FormStatus from "../Common/FormStatus";
-import InputField from "../Common/InputField";
-import CheckBox from "../Common/CheckBox";
-import { validateLoginForm } from "../../lib/validateLoginForm";
-import SelectField from "../Common/SelectField";
+import SelectField from "./Fields/SelectField";
+import WarningNo from "./Fields/WarningNo";
+
+import { MarketCodeDef } from "../../models/MarketCodeDef";
+import { SlctContext } from "../../store/slctContext";
 
 const initialState = {
-  marketCd: { value: "", touched: false, hasError: true, error: "" },
-  userId:   { value: "", touched: false, hasError: true, error: "" },
-  name:     { value: "", touched: false, hasError: true, error: "" },
-  password: { value: "", touched: false, hasError: true, error: "" },
-  terms:    { value: false, touched: false, hasError: true, error: "" },
+  marketCd:   { value: "", touched: false, hasError: true, error: "" },
+  warningNo:  { value: "", touched: false, hasError: true, error: "" },
+  mctnId:     { value: "", touched: false, hasError: true, error: "" },
   isFormValid: false,
 };
 
 const RequestsForm = () => {
   console.log("RequestsForm.init:");
 
-  const [formStatus, setFormStatus]  = useState({pending: false, errFlag: false, message: '' });
-  const [formState,  formDispatch]   = useReducer(formsReducer, initialState);
-  
-  const formSubmitHandler = (event: any) => {
-    event.preventDefault() //prevents the form from submitting
-    const {isFormValid, errMessage } = validateLoginForm(formState, formDispatch);
+  const [formStatus, setFormStatus] = useState({
+    pending: false,
+    errFlag: false,
+    message: "",
+  });
+  const [formState, formDispatch] = useReducer(formsReducer, initialState);
+  const slctCtx = useContext(SlctContext);
 
-    if (!isFormValid) {
-      setFormStatus({pending: false, errFlag: true, message: errMessage})
-    } else {
-      setFormStatus({pending: true, errFlag: false, message: "Processing request..."})
-      HttpService.getAllQuotes()
-      .then(response => {
-        const recCnt = response.data.length;
-        setFormStatus({pending: false, errFlag: false, message: "Processing complete: " + recCnt})
-        console.table(response.data);
+  useEffect(() => {
+    setFormStatus({
+      pending: true,
+      errFlag: false,
+      message: "Fetching market codes... ",
+    });
+    HttpService.getMarketCodes()
+      .then((response) => {
+        setFormStatus({
+          pending: false,
+          errFlag: false,
+          message: "Fetch complete: " + response.data.length,
+        });
+        const tmpOpts = response.data.map((item: MarketCodeDef) => {
+          return { key: item.marketCd, value: item.warningNo };
+        });
+        slctCtx.dispatch({ type: "LOAD_CODES", payload: { options: tmpOpts } });
       })
-      .catch(error => {
-        setFormStatus({pending: false, errFlag: true, message: error.message})
+      .catch((error) => {
+        setFormStatus({
+          pending: false,
+          errFlag: true,
+          message: error.message,
+        });
         console.log(error);
       });
-    }
-  }
+    // eslint-disable-next-line
+  }, []);
+
+  const formSubmitHandler = (event: any) => {
+    event.preventDefault(); //prevents the form from submitting
+  };
 
   return (
     <Card>
       <div className={classes.Login}>
         <h1 className={classes.title}>Manage Requests</h1>
-        <FormStatus pending={formStatus.pending} errFlag={formStatus.errFlag} message={formStatus.message} />
-        <form onSubmit={e => formSubmitHandler(e)}>
-          <SelectField id={"marketCd"}   dispName="Market Codes:"  formDispatch={formDispatch} formState={formState.marketCd} />
-          <InputField id={"userId"}   dispName="User Id:"  formDispatch={formDispatch} formState={formState.userId} />
-          <InputField id={"name"}     dispName="Name:"     formDispatch={formDispatch} formState={formState.name}   />
-          <InputField id={"password"} dispName="Password:" formDispatch={formDispatch} formState={formState.password} type="password"/>
-          <CheckBox   id={"terms"}    dispName="Accept terms and conditions" formDispatch={formDispatch} formState={formState.terms} />
-          
+        <form onSubmit={(e) => formSubmitHandler(e)}>
           <div className={classes.input_wrapper}>
-            <input
-              className={classes.submit_btn}
-              type="submit"
-              value="Sign Up"
-              disabled={formStatus.pending}
+            <SelectField
+              id={"marketCd"}
+              dispName="Market Code:"
+              formDispatch={formDispatch}
+              formState={formState.marketCd}
             />
+            <WarningNo
+              id={"warningNo"}
+              dispName="Warning No:"
+              formDispatch={formDispatch}
+              formState={formState.warningNo}
+              disabled={true}
+            />
+        <div className={`${classes.break}`} />
+
+        <FormStatus
+          pending={formStatus.pending}
+          errFlag={formStatus.errFlag}
+          message={formStatus.message}
+        />
+            <div className={classes.input_wrapper}>
+              <input
+                className={classes.submit_btn}
+                type="submit"
+                value="Search"
+                disabled={formStatus.pending}
+              />
+            </div>
           </div>
-        
         </form>
       </div>
     </Card>
