@@ -5,18 +5,21 @@ import AuthProvider from "./store/authContext";
 
 import "./index.css";
 import App from "./App";
-// eslint-disable-next-line    
+// eslint-disable-next-line
 import { makeServer } from "./server";
 import SlctProvider from "./store/slctContext";
+import { MktCdProvider } from "./store/mktCdContext";
 //makeServer({ environment: "dev" })
 
 ReactDOM.render(
   <React.StrictMode>
     <AuthProvider>
       <SlctProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
+        <MktCdProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </MktCdProvider>
       </SlctProvider>
     </AuthProvider>
   </React.StrictMode>,

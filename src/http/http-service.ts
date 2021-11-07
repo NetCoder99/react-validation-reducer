@@ -1,19 +1,6 @@
 import axios from "axios";
 import { getAccessToken } from "../lib/sessionStorage";
 
-//import { AuthToken } from "../models/AuthToken";
-//import http from "./http-common";
-
-// curl --location --request GET 'http://127.0.0.1:8181/login' \
-//   --header 'apiKey: test1' \
-//   --header 'headerKey: test1' \
-//   --header 'Content-Type: text/plain' \
-//   --data-raw '{
-//     "userName": "test1",
-//     "passWord": "test2"
-// }'
-//{headers : {'X-Requested-With': 'XMLHttpRequest'} }
-
 const BASE_URL = "http://127.0.0.1:8181";
 
 const lclInstance = axios.create({
@@ -53,7 +40,7 @@ const getAllQuotes = () => {
 };
 
 const getMarketCodes = () => {
-  return lclInstance.get("/getMarketCodes");
+  return lclInstance.get("/api/getMarketCodes");
 };
 
 

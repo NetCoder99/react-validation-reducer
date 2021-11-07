@@ -93,3 +93,7 @@ select.error {
   flex-basis: 100%;
   height: 0;
 }
+
+.width_4rem {
+  width: 4rem;
+}

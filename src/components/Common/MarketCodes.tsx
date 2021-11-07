@@ -1,6 +1,8 @@
 import { useContext } from "react";
 import { onFocusOut, onInputChange } from "../../lib/formUtils";
 import { SlctContext } from "../../store/slctContext";
+import { useAxios } from 'use-axios-client';
+import { MarketCodeDef } from "../../models/MarketCodeDef";
 //import classes from "../Login/LoginForm.module.css";
 
 export interface selectProps {
@@ -16,6 +18,14 @@ export interface selectProps {
   };
 }
 const MarketCodes = (props: selectProps) => {
+
+  const { data, error, loading } = useAxios<MarketCodeDef>({
+    url: 'http://127.0.0.1:8181/api/getMarketCodes',
+  });
+
+  console.log('MarketCodes.data', data)
+
+
   const slctCtx = useContext(SlctContext);
   let tmpOptions = slctCtx.state.options.map(
     (item: { key: string; value: string }) => (
