@@ -1,12 +1,13 @@
 import { onFocusOut, onInputChange } from '../../lib/formUtils';
+import { formFieldDef } from '../../store/fieldReducer';
 //import classes from '../Login/LoginForm.module.css';
 
 const InputField = (props: 
   { 
     id: string, 
     dispName: string,
-    formDispatch: React.Dispatch<any>, 
-    formState: any
+    fieldDispatch: React.Dispatch<any>, 
+    fieldState: formFieldDef,
     type?: string
     showMsg?: boolean
     disabled?: boolean
@@ -18,12 +19,12 @@ const InputField = (props:
   {
 
   let content = <div>&nbsp;</div>;
-  if (props.formState.touched && props.formState.hasError) {
-    content = <div className={props.classes.error}>{props.formState.error}</div>
+  if (props.fieldState.touched && props.fieldState.hasError) {
+    content = <div className={props.classes.error}>{props.fieldState.hasError}</div>
   };
 
   let tmpClass = '';
-  if (props.formState.touched && props.formState.hasError) {
+  if (props.fieldState.touched && props.fieldState.hasError) {
     tmpClass = props.classes.error;
   }
 
@@ -35,14 +36,14 @@ const InputField = (props:
       type={props.type || "text"}
       name={props.id}
       id={props.id}
-      value={props.formState.value}
+      value={props.fieldState.value}
       className={tmpClass && props.inpWidth}
       disabled={props.disabled}
       onChange={(e) => {
-        onInputChange(props.id, e.target.value, props.formDispatch, props.formState);
+        onInputChange(props.id, e.target.value, props.fieldDispatch, props.fieldState);
       }}
       onBlur={(e) => {
-        onFocusOut(props.id, e.target.value, props.formDispatch, props.formState);
+        onFocusOut(props.id, e.target.value, props.fieldDispatch, props.fieldState);
       }}
     />
     <div className={props.classes.break} />

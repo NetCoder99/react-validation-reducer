@@ -1,5 +1,5 @@
 .Login {
-  max-width: 70%;
+  max-width: 90%;
   margin: auto;
 }
 
@@ -7,25 +7,34 @@
   text-align: center;
 }
 
-.input_wrapper {
-  display: flex;
+.input_wrapper_flex {
+  display:   flex;
   flex-wrap: wrap;
   flex-direction: row;
   margin-bottom: 0.5rem;
-  margin-right: 1rem;
+  margin-right: .5rem;
 }
 
 .flexChild {
   flex: 1;
+  margin-right: .5rem;
 }  
 
 .flex-child:first-child {
-  margin-right: 20px;
+  margin-right: 10px;
 } 
+
+.input_container {
+  display: inline-block;
+}
+
+.input_wrapper {
+  display: inline-block;
+  margin-right: 2rem;
+}
 
 .input_wrapper label {
   display: inline-block;
-  width: 7rem;
   text-align: left;
   font-size: 1rem;
 }
@@ -96,4 +105,16 @@ select.error {
 
 .width_4rem {
   width: 4rem;
+}
+.width_5rem {
+  width: 5rem;
+}
+.width_6rem {
+  width: 6rem;
+}
+.width_7rem {
+  width: 7rem;
+}
+.width_8rem {
+  width: 8rem;
 }

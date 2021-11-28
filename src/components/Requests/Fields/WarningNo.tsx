@@ -24,6 +24,8 @@ const WarningNo = (props: warningNoProps) => {
     <div className={`${classes.input_wrapper} ${classes.flexChild}`}>
     <label htmlFor={props.id}>{props.dispName}</label>
     <div className={`${classes.break}`} />
+    <br />
+
     <input
       type={props.type || "text"}
       name={props.id}

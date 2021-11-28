@@ -9,7 +9,7 @@ import App from "./App";
 import { makeServer } from "./server";
 import SlctProvider from "./store/slctContext";
 import { MktCdProvider } from "./store/mktCdContext";
-//makeServer({ environment: "dev" })
+makeServer({ environment: "dev" })
 
 ReactDOM.render(
   <React.StrictMode>

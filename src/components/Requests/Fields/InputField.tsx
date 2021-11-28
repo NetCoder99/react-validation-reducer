@@ -1,22 +1,20 @@
 import { onFocusOut, onInputChange } from '../../../lib/formUtils';
+import classes from '../Requests.module.css';
 
-import classes from '../Login/LoginForm.module.css';
+interface inpProps {
+  id: string, 
+  dispName: string,
+  formDispatch: React.Dispatch<any>, 
+  formState : any
+  type?     : string
+  showMsg?  : boolean
+  disabled? : boolean
+  inpClass  : string
+  classes   : { readonly [key: string]: string; } 
+}
 
-const InputField = (props: 
-  { 
-    id: string, 
-    dispName: string,
-    formDispatch: React.Dispatch<any>, 
-    formState: any
-    type?: string
-    showMsg?: boolean
-    disabled?: boolean
-    inpClass: string
-    classes: {
-      readonly [key: string]: string;
-    }  
-    }) => 
-  {
+const InputField = (props: inpProps) => {
+  console.log("InputField.init");
 
   let content = <div>&nbsp;</div>;
   if (props.formState.touched && props.formState.hasError) {
@@ -29,7 +27,7 @@ const InputField = (props:
   }
 
   return (
-    <div className={`${props.classes.input_wrapper} ${props.classes.flexChild}`}>
+    <div className={`${classes.input_wrapper}`}>
     <label htmlFor={props.id}>{props.dispName}</label>
     <br />
     <input
@@ -37,7 +35,7 @@ const InputField = (props:
       name={props.id}
       id={props.id}
       value={props.formState.value}
-      className={tmpClass && props.inpClass}
+      className={props.inpClass}
       disabled={props.disabled}
       onChange={(e) => {
         onInputChange(props.id, e.target.value, props.formDispatch, props.formState);
@@ -46,8 +44,6 @@ const InputField = (props:
         onFocusOut(props.id, e.target.value, props.formDispatch, props.formState);
       }}
     />
-    <div className={props.classes.break} />
-    {props.showMsg && content} 
   </div>
   );
 };

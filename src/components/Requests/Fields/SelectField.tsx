@@ -10,13 +10,14 @@ export interface selectProps {
   formState:    any;
   type?:        string;
   showMsg?:     boolean;
+  inpClass?:    string
 }
 const SelectField = (props: selectProps) => {
 
   const slctCtx = useContext(SlctContext);
   let tmpOptions = slctCtx.state.options.map((item: {key: string,value: string}) => <option key={item.key} value={item.value}>{item.key}</option>)
 
-  let tmpClass = '';
+  let tmpClass = props.inpClass || '';
   if (props.formState.touched && props.formState.hasError) {
     tmpClass = classes.error;
   }
@@ -35,7 +36,7 @@ const SelectField = (props: selectProps) => {
   return (
     <div className={classes.input_wrapper}>
       <label htmlFor={props.id}>{props.dispName}</label>
-      <div className={`${classes.break}`} />
+      <br />
 
       <select
         value={props.formState.value}
@@ -48,8 +49,6 @@ const SelectField = (props: selectProps) => {
         <option value=""></option>
         {tmpOptions}
       </select>
-      <div className={classes.break} />
-      {props.showMsg && content}
     </div>
   );
 };
